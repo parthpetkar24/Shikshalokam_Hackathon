@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from keyword_model import KeywordExtractor
+from nlp.keyword_model import KeywordExtractor
+from classification.cluster_classifier import ClusterClassifier
 
 app = FastAPI(title="Teacher Keyword Extraction API")
 

@@ -1,5 +1,5 @@
-from keyword_model import KeywordExtractor
-from cluster_classifier import ClusterClassifier
+from nlp.keyword_model import KeywordExtractor
+from classification.cluster_classifier import ClusterClassifier
 
 text = "Teachers need advanced teaching learning materials."
 

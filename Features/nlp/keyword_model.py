@@ -1,10 +1,9 @@
 from keybert import KeyBERT
 from sentence_transformers import SentenceTransformer
-from preprocess import clean_text
-from config import EMBEDDING_MODEL, TOP_K_KEYWORDS
+from nlp.preprocess import clean_text
+from nlp.config import EMBEDDING_MODEL, TOP_K_KEYWORDS, CANONICAL_ISSUES
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
-from config import CANONICAL_ISSUES
 
 nlp = spacy.load("en_core_web_sm")
 

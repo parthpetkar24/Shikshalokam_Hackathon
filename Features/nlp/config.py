@@ -1,8 +1,6 @@
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 TOP_K_KEYWORDS = 5
 
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-TOP_K_KEYWORDS = 5
 
 # Canonical Issue Definitions
 CANONICAL_ISSUES = {

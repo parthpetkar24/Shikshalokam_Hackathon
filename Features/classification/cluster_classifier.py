@@ -1,4 +1,4 @@
-from config import CANONICAL_ISSUES, CLUSTER_METADATA
+from nlp.config import CANONICAL_ISSUES, CLUSTER_METADATA
 from collections import Counter
 
 class ClusterClassifier:
