@@ -59,6 +59,13 @@ nav a {
 }
 
 /* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  padding: 120px 60px;
+  gap: 60px;
+}
 .hero-title {
   font-size: 58px;
   font-weight: 800;
@@ -90,7 +97,24 @@ nav a {
   background: transparent;
 }
 
+/* LEFT TEXT */
+.hero-text {
+  max-width: 620px;
+}
 
+/* RIGHT IMAGE */
+.hero-image-wrapper {
+  display: flex;
+  justify-content: flex-end; /* push image to the right */
+  align-items: center;
+}
+
+/* IMAGE SCALES WITH TEXT */
+.hero-img {
+  width: 100%;
+  max-width: 520px;   /* proportional to text block */
+  height: auto;
+}
 
 /* common highlight style */
 .highlight {
