@@ -1,29 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>EduBridge</title>
-    <link rel="stylesheet" href="home.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+{% extends 'base.html' %}
+{% load static %}
 
-</head>
-<body>
+{% block title %}EduBridge{% endblock %}
 
-<!-- Navbar -->
-<header class="navbar">
-    <div class="logo">
-        <span class="logo-box">EB</span>
-        <span class="logo-text">EduBridge</span>
-    </div>
+{% block subhead %}
+<link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
 
-    <nav>
-        <a href="#features">Features</a>
-        <button class="btn primary" onclick="goToDIET()">SignUp for DIET →</button>
-      <button class="btn outline" onclick="goToTeacher()">SignUp as Teacher</button>
-    </nav>
-</header>
-
+{% block body %}
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero-text">
@@ -52,7 +36,7 @@
 
   <!-- RIGHT SIDE IMAGE -->
     <div class="hero-image-wrapper">
-        <img src="home.png" alt="Teacher Training Illustration" class="hero-img" />
+        <img src="{% static '\images\home.png' %}" alt="Teacher Training Illustration" class="hero-img" />
     </div>
 </section>
 
@@ -104,7 +88,6 @@
 
     </div>
 </section>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="home.js"></script>
-</body>
-</html>
+
+<script src="{% static 'home.js' %}"></script>
+{% endblock %}
