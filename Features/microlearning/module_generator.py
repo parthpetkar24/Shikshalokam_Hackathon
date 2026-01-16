@@ -15,7 +15,9 @@ class MicroLearningGenerator:
 
         if not policy_chunks:
             return {
-                "message": "No sufficient policy content found to generate module."
+                "cluster": cluster,
+                "message": "No sufficient policy content found to generate module.",
+                "sources": []
             }
 
         # Step 2: Combine policy text
