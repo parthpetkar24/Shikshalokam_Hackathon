@@ -1,47 +1,21 @@
-"""
-Test for Task 4: Micro-Learning Generator
-Run from project root:
-python -m tests.test_microlearning
-"""
+# tests/test_microlearning.py
 
-from feedback.policy_loader import PolicyLoader
-from microlearning.module_generator import MicroLearningGenerator
+from microlearning.module_generator import ModuleGenerator
 
-PDF_PATHS = [
-    "data/NEP_Final_English_0.pdf",
-    "data/Guidelines50HoursCpd.pdf",
-    "data/background_note_teacher_education.pdf",
-    "data/EmpoweringEducatorsTeacherTrainingandProfessionalDevelopmentinNEP2020India_e1xn0wSl.pdf"
-]
+def test_microlearning_cluster_A():
+    print("\n==============================")
+    print("Testing Microlearning Generator (Cluster A)")
+    print("==============================")
 
-if __name__ == "__main__":
-    loader = PolicyLoader(PDF_PATHS)
-    documents = loader.load_documents()
-
-    generator = MicroLearningGenerator(
-        documents=documents,
-        use_genai=True   # set False if no API key
-    )
-
+    generator = ModuleGenerator(use_genai=False)  # 🔥 IMPORTANT
     result = generator.generate_module(cluster="A")
 
-print("\n===== MICRO-LEARNING MODULE =====\n")
+    print("\n--- GENERATED MODULE ---")
+    for key, value in result.items():
+        print(f"\n{key.upper()}:\n{value}")
 
-if "module" in result:
-    print(result["module"])
-else:
-    print("Module not generated.")
-    print("Reason:", result.get("message"))
+    assert result is not None
+    assert "content" in result
 
-print("\n===== SOURCES =====")
-
-if "sources" in result:
-    for src in result["sources"]:
-        print(src)
-else:
-    print("No sources available (insufficient policy match).")
-
-generator = MicroLearningGenerator(
-    documents=documents,
-    use_genai=False   # 🔥 IMPORTANT
-)
+if __name__ == "__main__":
+    test_microlearning_cluster_A()

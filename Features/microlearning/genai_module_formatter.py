@@ -6,20 +6,29 @@ client = OpenAI(
 )
 
 class GenAIModuleFormatter:
-    def format_module(self, policy_text: str):
+    def __init__(self, use_genai=True):
+        self.use_genai = use_genai
+
+    def format_module(self, text):
+        if not self.use_genai:
+            # Fallback formatter (NO API CALL)
+            return {
+                "title": "Microlearning Module (Offline)",
+                "content": text[:500],  # safe truncation
+                "source": "static-policy-content"
+            }
+
+        # 🔴 GenAI path (only when enabled)
+        from openai import OpenAI
+        client = OpenAI()
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You create structured micro-learning modules for teachers "
-                        "using ONLY the provided policy text. Do not add new ideas."
-                    )
-                },
-                {"role": "user", "content": policy_text}
+                {"role": "system", "content": "You are an expert teacher trainer."},
+                {"role": "user", "content": text}
             ],
             temperature=0.2
         )
-
         return response.choices[0].message.content
+
