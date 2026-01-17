@@ -54,13 +54,14 @@
 
     <div class="feature-grid">
 
-        <div class="feature-card blue">
-            <h3>Real-Time Feedback & Analysis</h3>
-            <p>
-                Teachers report classroom issues via web interface.
-                AI analyzes and groups them into three clusters.
-            </p>
-        </div>
+<div class="feature-card blue" onclick="openFeedbackModal()">
+    <h3>Real-Time Feedback & Analysis</h3>
+    <p>
+        Teachers report classroom issues via web interface.
+        AI analyzes and groups them into three clusters.
+    </p>
+</div>
+
 
         <div class="feature-card green">
             <h3>GenAI-Powered Adaptive Training</h3>
@@ -88,6 +89,41 @@
 
     </div>
 </section>
+<!-- Real-Time Feedback Modal -->
+<div id="feedbackModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-btn" onclick="closeFeedbackModal()">×</span>
+
+    <h2>🧠 Real-Time Classroom Feedback</h2>
+    <p class="modal-subtitle">
+      Tell us what’s happening in your classroom. EduBridge AI will assist you instantly.
+    </p>
+
+    <label>Issue Category</label>
+    <select id="issueType">
+      <option>Student Engagement</option>
+      <option>Language Barrier</option>
+      <option>Classroom Management</option>
+      <option>Learning Gaps</option>
+    </select>
+
+    <label>Describe the Problem</label>
+    <textarea id="teacherFeedback"
+      placeholder="Example: Students are not responding during science lessons..."
+    ></textarea>
+
+    <button class="ai-btn" onclick="submitFeedback()">
+      Analyze with AI →
+    </button>
+
+    <!-- AI RESPONSE -->
+    <div id="aiResponse" class="ai-response hidden">
+      <h4>🤖 EduBridge AI Suggestion</h4>
+      <p id="aiText"></p>
+    </div>
+  </div>
+</div>
+
 
 <script src="{% static 'home.js' %}"></script>
 {% endblock %}
