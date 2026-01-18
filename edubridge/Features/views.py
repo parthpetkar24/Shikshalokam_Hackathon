@@ -12,11 +12,6 @@ cluster_classifier = ClusterClassifier()
 
 
 class AnalyzeIssueAPIView(APIView):
-    """
-    Takes teacher classroom issue text
-    → Extracts canonical issues
-    → Classifies into NEP clusters (A/B/C)
-    """
 
     def post(self, request):
         serializer = AnalyzeTextSerializer(data=request.data)
@@ -24,14 +19,25 @@ class AnalyzeIssueAPIView(APIView):
 
         text = serializer.validated_data["text"]
 
-        # NLP → Keyword extraction
-        issues = keyword_extractor.extract_keywords(text)
+        try:
+            issues = keyword_extractor.extract_keywords(text)
 
-        # Classification
-        cluster_result = cluster_classifier.classify(issues)
+            if not issues:
+                return Response({
+                    "detected_issues": [],
+                    "cluster_result": "Insufficient data",
+                    "message": "Please provide more classroom details."
+                }, status=status.HTTP_200_OK)
 
-        return Response({
-            "input_text": text,
-            "detected_issues": issues,
-            "cluster_result": cluster_result
-        }, status=status.HTTP_200_OK)
+            cluster_result = cluster_classifier.classify(issues)
+
+            return Response({
+                "input_text": text,
+                "detected_issues": issues,
+                "cluster_result": cluster_result
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -40,9 +40,7 @@
     </div>
 </section>
 
-</div>
 
-</section>
 
 <!-- Features Section -->
 <section class="features" id="features">
@@ -71,7 +69,7 @@
             </p>
         </div>
 
-        <div class="feature-card yellow">
+        <div class="feature-card yellow" onclick="openMicroModuleModal()">
             <h3>Micro-Learning Modules</h3>
             <p>
                 Short, focused training delivered exactly when teachers need it,
@@ -121,6 +119,37 @@
       <h4>🤖 EduBridge AI Suggestion</h4>
       <p id="aiText"></p>
     </div>
+  </div>
+</div>
+<!-- Micro-Learning Module Modal -->
+<div id="microModuleModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-btn" onclick="closeMicroModuleModal()">×</span>
+
+    <h2>📘 Micro-Learning Module</h2>
+    <p class="modal-subtitle">
+      Policy-aligned, classroom-ready learning in 10–15 minutes
+    </p>
+
+    <label>Module Focus Area</label>
+    <select id="moduleTopic">
+      <option>Continuous Professional Development (CPD)</option>
+      <option>Student Engagement</option>
+      <option>Inclusive Classrooms</option>
+      <option>Pedagogical Shift (NEP 2020)</option>
+    </select>
+
+    <label>Module Overview</label>
+    <div class="module-preview">
+      <p id="moduleText">
+        Select a focus area to view a summarized micro-learning module
+        based on official policy documents.
+      </p>
+    </div>
+
+    <button class="ai-btn" onclick="loadMicroModule()">
+      View Micro-Module →
+    </button>
   </div>
 </div>
 
