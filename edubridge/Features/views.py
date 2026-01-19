@@ -1,3 +1,6 @@
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,7 +14,7 @@ from Features.microlearning.micro_module_service import generate_micro_module
 keyword_extractor = KeywordExtractor()
 cluster_classifier = ClusterClassifier()
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class AnalyzeIssueAPIView(APIView):
 
     def post(self, request):
@@ -39,10 +42,12 @@ class AnalyzeIssueAPIView(APIView):
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
-            return Response({
-                "error": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
+@method_decorator(csrf_exempt, name='dispatch')
 class MicroModuleAPIView(APIView):
     def post(self, request):
         serializer = MicroModuleRequestSerializer(data=request.data)
