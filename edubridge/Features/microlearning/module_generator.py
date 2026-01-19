@@ -1,10 +1,8 @@
-# microlearning/module_generator.py
-
 from pathlib import Path
-from microlearning.pdf_loader import PDFLoader
-from microlearning.text_cleanser import TextCleaner
-from microlearning.summarizer import RuleBasedSummarizer
-from microlearning.module_formatter import MicroModuleFormatter
+from Features.microlearning.pdf_loader import PDFLoader
+from Features.microlearning.text_cleanser import TextCleaner
+from Features.microlearning.summarizer import RuleBasedSummarizer
+from Features.microlearning.module_formatter import MicroModuleFormatter
 
 class ModuleGenerator:
     def __init__(self, pdf_path: Path):

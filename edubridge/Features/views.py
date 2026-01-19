@@ -2,9 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializer import AnalyzeTextSerializer
+from .serializer import AnalyzeTextSerializer, MicroModuleRequestSerializer
 from Features.nlp.keyword_model import KeywordExtractor
 from Features.classification.cluster_classifier import ClusterClassifier
+from Features.microlearning.micro_module_service import generate_micro_module
 
 # Initialize once (important for performance)
 keyword_extractor = KeywordExtractor()
@@ -41,3 +42,19 @@ class AnalyzeIssueAPIView(APIView):
             return Response({
                 "error": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class MicroModuleAPIView(APIView):
+    def post(self, request):
+        serializer = MicroModuleRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        topic = serializer.validated_data["topic"]
+
+        try:
+            module = generate_micro_module(topic)
+            return Response(module)
+        except ValueError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
