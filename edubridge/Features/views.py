@@ -10,7 +10,6 @@ from Features.nlp.keyword_model import KeywordExtractor
 from Features.classification.cluster_classifier import ClusterClassifier
 from Features.microlearning.micro_module_service import generate_micro_module
 
-# Initialize once (important for performance)
 keyword_extractor = KeywordExtractor()
 cluster_classifier = ClusterClassifier()
 
