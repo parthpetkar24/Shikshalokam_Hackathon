@@ -1,4 +1,3 @@
-# microlearning/summarizer.py
 
 class RuleBasedSummarizer:
     @staticmethod

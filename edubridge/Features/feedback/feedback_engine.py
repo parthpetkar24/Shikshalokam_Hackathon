@@ -1,12 +1,13 @@
 from feedback.policy_loader import PolicyLoader
 from feedback.policy_retriever import PolicyRetriever
 from feedback.genai_rephraser import PolicyRephraser
+from django.conf import settings
 
 PDF_PATHS = [
-    "data/NEP_Final_English_0.pdf",
-    "data/Guidelines50HoursCpd.pdf",
-    "data/background_note_teacher_education.pdf",
-    "data/EmpoweringEducatorsTeacherTrainingandProfessionalDevelopmentinNEP2020India_e1xn0wSl.pdf",
+    settings.DATA_DIR / "NEP_Final_English_0.pdf",
+    settings.DATA_DIR / "Guidelines50HoursCpd.pdf",
+    settings.DATA_DIR / "background_note_teacher_education.pdf",
+    settings.DATA_DIR / "EmpoweringEducatorsTeacherTrainingandProfessionalDevelopmentinNEP2020India_e1xn0wSl.pdf",
 ]
 
 

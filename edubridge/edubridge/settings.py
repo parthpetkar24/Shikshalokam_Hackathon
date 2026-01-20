@@ -125,6 +125,10 @@ STATICFILES_DIRS = [BASE_DIR/'static']
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DATA_DIR = BASE_DIR / "data" 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True

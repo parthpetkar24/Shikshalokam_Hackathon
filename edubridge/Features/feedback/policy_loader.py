@@ -1,7 +1,8 @@
 import fitz  # PyMuPDF
+from pathlib import Path
 
 class PolicyLoader:
-    def __init__(self, pdf_paths: list):
+    def __init__(self, pdf_paths: list[Path]):
         self.pdf_paths = pdf_paths
 
     def load_documents(self):

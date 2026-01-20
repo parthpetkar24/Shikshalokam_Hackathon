@@ -1,129 +1,172 @@
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-TOP_K_KEYWORDS = 5
-
-
-# Canonical Issue Definitions
 CANONICAL_ISSUES = {
 
-    # Cluster A: Student Engagement
-    "classroom discipline": {
-        "cluster": "A",
-        "variants": [
-            "classroom discipline",
-            "student discipline",
-            "student behavior",
-            "misbehavior",
-            "class control",
-            "classroom management",
-            "behavior issue"
-        ]
-    },
-
+    # CLuster A
     "student absenteeism": {
         "cluster": "A",
         "variants": [
-            "student absenteeism",
-            "absenteeism",
-            "student absence",
-            "irregular attendance",
-            "low attendance",
+            "absent", "absence", "absentee", "absenteeism",
+            "students absent",
+            "student absent",
+            "not attending",
+            "not coming",
+            "missing class",
             "missing classes",
-            "students not attending"
+            "low attendance",
+            "poor attendance",
+            "irregular attendance",
+
+            "students not coming",
+            "children absent",
+            "kids absent",
+            "no attendance",
+            "attendance low",
+            "dropout",
+            "drop out",
+            "dropouts"
+        ]
+    },
+
+    "classroom discipline": {
+        "cluster": "A",
+        "variants": [
+            "discipline",
+            "indiscipline",
+            "misbehavior",
+            "misbehaviour",
+            "behavior issue",
+            "behaviour issue",
+            "students misbehave",
+            "students noisy",
+            "no discipline",
+            "class control",
+            "classroom control",
+            "classroom issue",
+            "students not listening",
+            "students out of control"
         ]
     },
 
     "parent engagement": {
         "cluster": "A",
         "variants": [
-            "parent engagement",
-            "parent involvement",
-            "parent cooperation",
-            "parents not attending",
-            "lack of parental support",
-            "parent meetings"
+            "parent",
+            "parents",
+            "no parents",
+            "parents not coming",
+            "parent issue",
+            "parent problem",
+            "parent support",
+            "no parent support",
+            "parents not supportive",
+            "no parental support",
+            "no parent involvement",
+            "parents absent",
+            "parent meeting",
+            "parents not attending"
         ]
     },
 
-    # Cluster B: Advanced Academics
+    # Cluster B
     "advanced teaching materials": {
         "cluster": "B",
         "variants": [
+            "advanced",
             "advanced tlm",
-            "teaching learning materials",
-            "science tlm",
-            "learning resources",
-            "lab materials",
-            "science models"
+            "no tlm",
+            "need tlm",
+            "learning material",
+            "teaching material",
+            "no teaching material",
+            "no learning material",
+            "resources",
+            "no resources",
+            "lack of resources",
+            "study material"
         ]
     },
 
     "experiential science teaching": {
         "cluster": "B",
         "variants": [
-            "science experiments",
-            "hands-on learning",
-            "practical science",
-            "activity based science",
-            "experiential learning"
+            "science",
+            "science practical",
+            "no practical",
+            "no lab",
+            "laboratory",
+            "lab issue",
+            "lab problem",
+            "science experiment",
+            "no experiment",
+            "hands on",
+            "hands-on",
+            "activity based",
+            "practical science"
         ]
     },
 
     "higher order learning": {
         "cluster": "B",
         "variants": [
-            "critical thinking",
-            "problem solving",
-            "higher order thinking",
-            "conceptual understanding"
+            "advanced students",
+            "bright students",
+            "fast learners",
+            "gifted students",
+            "high performing",
+            "students bored",
+            "students finish early",
+            "need higher level",
+            "need advanced content"
         ]
     },
 
-    # Cluster C: Language & Context
+    #Cluster C
     "language barrier": {
         "cluster": "C",
         "variants": [
-            "language barrier",
-            "medium of instruction",
+            "language",
             "language issue",
-            "students not understanding language",
-            "translation problem"
+            "language problem",
+            "language barrier",
+            "medium",
+            "medium issue",
+            "medium of instruction",
+            "students not understanding",
+            "children not understanding",
+            "cannot understand",
+            "english problem",
+            "hindi problem"
         ]
     },
 
     "local context teaching": {
         "cluster": "C",
         "variants": [
+            "tribal",
+            "tribal area",
+            "tribal students",
             "local context",
-            "tribal context",
-            "cultural relevance",
-            "local examples",
-            "contextual teaching"
+            "local example",
+            "no local example",
+            "context",
+            "contextual",
+            "contextual teaching",
+            "cultural issue",
+            "cultural problem"
         ]
     },
 
     "multilingual classroom": {
         "cluster": "C",
         "variants": [
-            "multilingual classroom",
+            "multilingual",
+            "many languages",
             "multiple languages",
             "different languages",
+            "local language",
+            "mother tongue",
+            "dialect",
             "local dialect",
-            "mother tongue"
+            "students speak different language"
         ]
-    }
-}
-
-CLUSTER_METADATA = {
-    "A": {
-        "name": "Student Engagement & Behaviour",
-        "description": "Issues related to attendance, discipline, and parental involvement"
-    },
-    "B": {
-        "name": "Advanced Academics & Pedagogy",
-        "description": "Issues related to higher-order learning and advanced teaching resources"
-    },
-    "C": {
-        "name": "Language & Local Context",
-        "description": "Issues related to language barriers and contextual teaching"
     }
 }

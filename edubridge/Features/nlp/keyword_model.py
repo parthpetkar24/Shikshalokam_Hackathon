@@ -11,6 +11,18 @@ class KeywordExtractor:
     def __init__(self):
         self.embedding_model = SentenceTransformer(EMBEDDING_MODEL)
         self.kw_model = KeyBERT(model=self.embedding_model)
+    
+    def normalize_from_raw_text(self, text: str):
+        detected = set()
+        text = text.lower()
+
+        for canonical, data in CANONICAL_ISSUES.items():
+            for variant in data["variants"]:
+                if variant in text:
+                    detected.add(canonical)
+                    break
+
+        return list(detected)
    
     def normalize_to_canonical(self, phrases):
         detected = set()
@@ -23,6 +35,7 @@ class KeywordExtractor:
                         detected.add(canonical)
 
         return list(detected)
+
     
     def is_valid_keyword(self, phrase):
         doc = nlp(phrase)
@@ -49,7 +62,8 @@ class KeywordExtractor:
 
         return final
 
-    def extract_keywords(self, text):
+    def extract_keywords(self, text: str):
+        canonical_from_text = self.normalize_from_raw_text(text)
         raw = self.kw_model.extract_keywords(
             text.lower(),
             keyphrase_ngram_range=(1, 3),
@@ -58,7 +72,8 @@ class KeywordExtractor:
         )
 
         phrases = [kw[0] for kw in raw]
+        phrases = [p for p in phrases if self.is_valid_keyword(p)]
+        canonical_from_keywords = self.normalize_to_canonical(phrases)
+        final_canonical = list(set(canonical_from_text + canonical_from_keywords))
+        return final_canonical
 
-        canonical_keywords = self.normalize_to_canonical(phrases)
-
-        return canonical_keywords

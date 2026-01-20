@@ -1,15 +1,12 @@
 from pathlib import Path
+from django.conf import settings
 from Features.microlearning.module_generator import ModuleGenerator
 
-NEP_PDF = Path("data/NEP_Final_English_0.pdf")
-CPD_PDF = Path("data/Guidelines50HoursCpd.pdf")
-TEACHER_EDU_PDF = Path("data/background_note_teacher_education.pdf")
-
 PDF_MAP = {
-    "Continuous Professional Development (CPD)": CPD_PDF,
-    "Pedagogical Shift (NEP 2020)": NEP_PDF,
-    "Inclusive Classrooms": TEACHER_EDU_PDF,
-    "Student Engagement": NEP_PDF
+    "Continuous Professional Development (CPD)": settings.DATA_DIR / "Guidelines50HoursCpd.pdf",
+    "Pedagogical Shift (NEP 2020)": settings.DATA_DIR / "NEP_Final_English_0.pdf",
+    "Inclusive Classrooms": settings.DATA_DIR / "background_note_teacher_education.pdf",
+    "Student Engagement": settings.DATA_DIR / "NEP_Final_English_0.pdf",
 }
 
 
