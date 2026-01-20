@@ -1,4 +1,50 @@
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+
 # nlp/config.py
+
+CLUSTER_METADATA = {
+    "A": {
+        "name": "Student Engagement & Attendance",
+        "description": (
+            "Issues related to student absenteeism, classroom discipline, "
+            "and lack of parental engagement that affect regular participation "
+            "and classroom stability."
+        ),
+        "focus_areas": [
+            "Attendance improvement",
+            "Classroom management",
+            "Parent–teacher collaboration"
+        ]
+    },
+
+    "B": {
+        "name": "Advanced Pedagogy & Learning Resources",
+        "description": (
+            "Issues related to availability and use of advanced teaching-learning "
+            "materials, experiential science education, and meeting the needs "
+            "of high-performing or fast-learning students."
+        ),
+        "focus_areas": [
+            "Experiential learning",
+            "Teaching-learning materials (TLMs)",
+            "Higher-order and advanced learning"
+        ]
+    },
+
+    "C": {
+        "name": "Language & Contextual Barriers",
+        "description": (
+            "Issues arising from language barriers, multilingual classrooms, "
+            "and lack of locally relevant or culturally contextualized teaching methods."
+        ),
+        "focus_areas": [
+            "Mother tongue / multilingual instruction",
+            "Local and cultural context integration",
+            "Inclusive classroom communication"
+        ]
+    }
+}
+
 
 CANONICAL_ISSUES = {
 

@@ -1,6 +1,6 @@
 # microlearning/micro_module_selector.py
 
-from microlearning.micro_module_config import (
+from Features.microlearning.micro_module_config import (
     MICRO_MODULES,
     DEFAULT_MICRO_MODULE
 )

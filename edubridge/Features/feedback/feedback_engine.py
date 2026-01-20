@@ -1,8 +1,6 @@
-# feedback/feedback_engine.py
-
-from feedback.policy_loader import PolicyLoader
-from feedback.policy_retriever import PolicyRetriever
-from feedback.genai_rephraser import PolicyRephraser
+from Features.feedback.policy_loader import PolicyLoader
+from Features.feedback.policy_retriever import PolicyRetriever
+from Features.feedback.genai_rephraser import PolicyRephraser
 from django.conf import settings
 
 PDF_PATHS = [
