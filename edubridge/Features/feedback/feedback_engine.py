@@ -1,3 +1,5 @@
+# feedback/feedback_engine.py
+
 from feedback.policy_loader import PolicyLoader
 from feedback.policy_retriever import PolicyRetriever
 from feedback.genai_rephraser import PolicyRephraser
@@ -12,27 +14,46 @@ PDF_PATHS = [
 
 
 class FeedbackEngine:
-    def __init__(self, use_genai=True):
+    def __init__(self):
         loader = PolicyLoader(PDF_PATHS)
-        self.documents = loader.load_documents()
-        self.retriever = PolicyRetriever(self.documents)
-        self.rephraser = PolicyRephraser() if use_genai else None
+        documents = loader.load_documents()
+        self.retriever = PolicyRetriever(documents)
+        self.rephraser = PolicyRephraser()
 
-    def generate_feedback(self, cluster: str):
-        policy_snippets = self.retriever.retrieve(cluster)
+    def generate_feedback(self, nlp_output: list, cluster_result: dict, raw_issue: str):
+        """
+        nlp_output: Fix 1 output
+        cluster_result: Fix 2 ClusterClassifier output
+        raw_issue: original user text
+        """
 
-        feedback = []
+        if not nlp_output or cluster_result["cluster_id"] == "Insufficient data":
+            return {
+                "error": "Issue not identified clearly"
+            }
+
+        issue_keys = [item["key"] for item in nlp_output]
+
+        policy_snippets = self.retriever.retrieve(issue_keys)
+
+        feedback_items = []
 
         for item in policy_snippets:
-            text = item["text"]
+            feedback = self.rephraser.generate_feedback(
+                issue=raw_issue,
+                cluster=cluster_result["cluster_name"],
+                policy_text=item["text"]
+            )
 
-            if self.rephraser:
-                text = self.rephraser.simplify(text)
-
-            feedback.append({
-                "feedback": text,
+            feedback_items.append({
+                "feedback": feedback,
                 "source_pdf": item["source"],
                 "page": item["page"]
             })
 
-        return feedback
+        return {
+            "cluster": cluster_result["cluster_name"],
+            "confidence": cluster_result["confidence"],
+            "issues": issue_keys,
+            "feedback": feedback_items
+        }

@@ -1,15 +1,24 @@
-CLUSTER_KEYWORDS = {
-    "A": ["attendance", "discipline", "behaviour", "behavior", "engagement"],
-    "B": ["experiential", "activity", "science", "critical thinking", "tlm"],
-    "C": ["language", "multilingual", "mother tongue", "local context"]
+# feedback/policy_retriever.py
+
+ISSUE_KEYWORDS = {
+    "student_absenteeism": ["attendance", "dropout", "retention"],
+    "parent_engagement": ["parent", "family", "community"],
+    "classroom_discipline": ["discipline", "behavior"],
+    "language_barrier": ["language", "mother tongue", "multilingual"],
+    "advanced_teaching_materials": ["materials", "resources", "tlm"],
+    "experiential_science_teaching": ["science", "practical", "experiment"]
 }
+
 
 class PolicyRetriever:
     def __init__(self, documents):
         self.documents = documents
 
-    def retrieve(self, cluster: str, top_k=3):
-        keywords = CLUSTER_KEYWORDS.get(cluster, [])
+    def retrieve(self, issue_keys: list, top_k=3):
+        keywords = set()
+        for key in issue_keys:
+            keywords.update(ISSUE_KEYWORDS.get(key, []))
+
         results = []
 
         for doc in self.documents:

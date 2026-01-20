@@ -1,110 +1,91 @@
+# nlp/config.py
+
 CANONICAL_ISSUES = {
 
-    # CLuster A
+    # -------- Cluster A --------
     "student absenteeism": {
+        "key": "student_absenteeism",
         "cluster": "A",
         "variants": [
             "absent", "absence", "absentee", "absenteeism",
-            "students absent",
-            "student absent",
-            "not attending",
-            "not coming",
-            "missing class",
-            "missing classes",
-            "low attendance",
-            "poor attendance",
+            "students absent", "student absent",
+            "not attending", "not coming",
+            "missing class", "missing classes",
+            "low attendance", "poor attendance",
             "irregular attendance",
-
-            "students not coming",
-            "children absent",
-            "kids absent",
-            "no attendance",
+            "students not coming", "children absent",
+            "kids absent", "no attendance",
             "attendance low",
-            "dropout",
-            "drop out",
-            "dropouts"
+            "dropout", "drop out", "dropouts"
         ]
     },
 
     "classroom discipline": {
+        "key": "classroom_discipline",
         "cluster": "A",
         "variants": [
-            "discipline",
-            "indiscipline",
-            "misbehavior",
-            "misbehaviour",
-            "behavior issue",
-            "behaviour issue",
-            "students misbehave",
-            "students noisy",
-            "no discipline",
-            "class control",
+            "discipline", "indiscipline",
+            "misbehavior", "misbehaviour",
+            "behavior issue", "behaviour issue",
+            "students misbehave", "students noisy",
+            "no discipline", "class control",
             "classroom control",
-            "classroom issue",
             "students not listening",
             "students out of control"
         ]
     },
 
     "parent engagement": {
+        "key": "parent_engagement",
         "cluster": "A",
         "variants": [
-            "parent",
-            "parents",
-            "no parents",
+            "parent", "parents",
             "parents not coming",
-            "parent issue",
-            "parent problem",
-            "parent support",
+            "parent issue", "parent problem",
             "no parent support",
             "parents not supportive",
             "no parental support",
             "no parent involvement",
-            "parents absent",
             "parent meeting",
             "parents not attending"
         ]
     },
 
-    # Cluster B
+    # -------- Cluster B --------
     "advanced teaching materials": {
+        "key": "advanced_teaching_materials",
         "cluster": "B",
         "variants": [
-            "advanced",
-            "advanced tlm",
-            "no tlm",
-            "need tlm",
+            "advanced", "advanced tlm",
+            "no tlm", "need tlm",
             "learning material",
             "teaching material",
             "no teaching material",
             "no learning material",
-            "resources",
-            "no resources",
+            "resources", "no resources",
             "lack of resources",
             "study material"
         ]
     },
 
     "experiential science teaching": {
+        "key": "experiential_science_teaching",
         "cluster": "B",
         "variants": [
-            "science",
-            "science practical",
-            "no practical",
-            "no lab",
-            "laboratory",
-            "lab issue",
+            "science", "science practical",
+            "no practical", "no lab",
+            "laboratory", "lab issue",
             "lab problem",
             "science experiment",
             "no experiment",
-            "hands on",
-            "hands-on",
+            "hands on", "hands-on",
             "activity based",
             "practical science"
         ]
     },
 
     "higher order learning": {
+        "key": "higher_order_learning",
         "cluster": "B",
         "variants": [
             "advanced students",
@@ -119,16 +100,15 @@ CANONICAL_ISSUES = {
         ]
     },
 
-    #Cluster C
+    # -------- Cluster C --------
     "language barrier": {
+        "key": "language_barrier",
         "cluster": "C",
         "variants": [
-            "language",
-            "language issue",
+            "language", "language issue",
             "language problem",
             "language barrier",
-            "medium",
-            "medium issue",
+            "medium", "medium issue",
             "medium of instruction",
             "students not understanding",
             "children not understanding",
@@ -139,16 +119,15 @@ CANONICAL_ISSUES = {
     },
 
     "local context teaching": {
+        "key": "local_context_teaching",
         "cluster": "C",
         "variants": [
-            "tribal",
-            "tribal area",
+            "tribal", "tribal area",
             "tribal students",
             "local context",
             "local example",
             "no local example",
-            "context",
-            "contextual",
+            "context", "contextual",
             "contextual teaching",
             "cultural issue",
             "cultural problem"
@@ -156,6 +135,7 @@ CANONICAL_ISSUES = {
     },
 
     "multilingual classroom": {
+        "key": "multilingual_classroom",
         "cluster": "C",
         "variants": [
             "multilingual",
