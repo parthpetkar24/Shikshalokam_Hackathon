@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DIET Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>🏫 DIET Admin Dashboard</h2>
+</header>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat">👩‍🏫 Teachers<br><b>120</b></div>
+    <div class="stat">📋 Issues<br><b>45</b></div>
+    <div class="stat">🔥 High Need<br><b>Math Grade 4</b></div>
+  </div>
+
+  <div class="card">
+    <h3>Cluster Heatmap (Sample)</h3>
+    <div class="heatmap">
+      <div class="high">Pedagogy</div>
+      <div class="medium">Language</div>
+      <div class="low">Infrastructure</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Generate Training Module</h3>
+    <select>
+      <option>Pedagogical Issues</option>
+      <option>Language Gap</option>
+      <option>Low Infrastructure</option>
+    </select>
+    <button onclick="generateModule()">Generate AI Module</button>
+    <p id="result"></p>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
