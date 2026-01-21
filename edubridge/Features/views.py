@@ -11,7 +11,14 @@ from Features.feedback.feedback_engine import FeedbackEngine
 @api_view(["POST"])
 def analyze_feedback(request):
     # 1️⃣ Get raw issue text from frontend
-    issue_text = request.data.get("issue", "").strip()
+    issue_text = (
+        request.data.get("issue")
+        or request.data.get("problem")
+        or request.data.get("description")
+        or request.data.get("text")
+        or ""
+    ).strip()
+
 
     if not issue_text:
         return Response({

@@ -30,47 +30,22 @@ class FeedbackEngine:
 
     def generate_feedback(self, issue_text: str, cluster: dict) -> dict:
 
-        # FIX: Map cluster output → canonical issue key
+        # 🔹 Extract issue keys safely
         issue_keys = []
 
-        if isinstance(cluster, dict):
-            # Case 1: NLP cluster output
-            if "issues" in cluster and cluster["issues"]:
-                issue_keys = [item["key"] for item in cluster["issues"]]
+        if isinstance(cluster, dict) and "issues" in cluster:
+            issue_keys = [item["key"] for item in cluster["issues"]]
 
-            # Case 2: Fallback (cluster id only)
-            elif "cluster_id" in cluster:
-                if cluster["cluster_id"] == "A":
-                    issue_keys = ["student_absenteeism"]
-
-
-        # Retrieve relevant policy documents
+        # 🔹 Retrieve policy documents (issue-based, PDF-safe)
         policy_docs = self.policy_retriever.retrieve(issue_keys)
 
-        # HARD FALLBACK — No policy match
-        if not policy_docs:
-            return {
-                "feedback": [
-                    {
-                        "feedback": (
-                            "The reported issue reflects a need for strengthened "
-                            "need-based professional development mechanisms as "
-                            "outlined under the National Education Policy (NEP) 2020. "
-                            "Institutional review and contextualized training support "
-                            "are required."
-                        )
-                    }
-                ]
-            }
-
-        # Generate PROFESSIONAL policy-grounded feedback
+        # 🔹 ALWAYS generate feedback via GenAI if issue exists
         feedback_text = self.policy_feedback_generator.generate(
             issue=issue_text,
             cluster=cluster.get("cluster_name", "Unclassified Issue"),
             policy_docs=policy_docs
         )
 
-        # Final frontend-safe response
         return {
             "feedback": [
                 {
@@ -78,3 +53,4 @@ class FeedbackEngine:
                 }
             ]
         }
+

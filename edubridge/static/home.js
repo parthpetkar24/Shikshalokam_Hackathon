@@ -68,15 +68,15 @@ function submitFeedback() {
     })
   })
     .then(async res => {
-  const data = await res.json().catch(() => ({}));
+      const data = await res.json().catch(() => ({}));
 
-  if (!res.ok) {
-    console.error("BACKEND ERROR:", data);
-    return data; // let UI show backend message
-  }
+      if (!res.ok) {
+        console.error("BACKEND ERROR:", data);
+        throw new Error("Backend error");
+      }
 
-  return data;
-})
+      return data;
+    })
     .then(data => {
       // ---- Detected Issues ----
       const issues = data.detected_issues?.map(i => i.name).join(", ")
@@ -84,6 +84,11 @@ function submitFeedback() {
 
       // ---- Cluster ----
       const clusterName = data.cluster?.cluster_name || "Not identified";
+
+      // ---- AI Feedback (FIXED) ----
+      const feedbackText =
+        data.feedback?.[0]?.feedback ||
+        "No policy-based feedback available.";
 
       responseText.innerHTML = `
         <strong>Detected Issues</strong><br>
@@ -93,13 +98,18 @@ function submitFeedback() {
         <span class="cluster-badge">${clusterName}</span><br><br>
 
         <strong>AI Feedback</strong><br>
-        ${data.feedback?.feedback?.[0]?.feedback || "Policy-based guidance generated."}
+        ${feedbackText}
       `;
 
-      // Store micro-module for next step
+      // Optional: store micro-module
       window.__MICRO_MODULE__ = data.micro_module;
     })
+    .catch(err => {
+      responseText.innerText = "An error occurred while analyzing the feedback.";
+      console.error(err);
+    });
 }
+
 
 // -------------------- LOAD MICRO MODULE --------------------
 function loadMicroModule() {

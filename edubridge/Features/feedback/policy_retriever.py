@@ -1,44 +1,110 @@
-# Features/policy/policy_retriever.py
-
 from Features.nlp.config import CANONICAL_ISSUES
+
+
+# 🔹 Policy theme keywords (NEP-aligned language)
+# These terms are known to exist in NEP 2020 / CPD documents
+POLICY_THEME_KEYWORDS = {
+
+    # -------- Cluster A : Engagement & Attendance --------
+    "student_absenteeism": {
+        "retention",
+        "access",
+        "participation",
+        "engagement",
+        "dropout",
+        "continuity",
+        "enrolment",
+        "attendance"
+    },
+
+    "classroom_discipline": {
+        "school climate",
+        "student wellbeing",
+        "discipline",
+        "classroom",
+        "behaviour",
+        "socio emotional"
+    },
+
+    "parent_engagement": {
+        "parent",
+        "parents",
+        "community",
+        "local community",
+        "stakeholder",
+        "family",
+        "community participation"
+    },
+
+    # -------- Cluster B : Pedagogy & Resources --------
+    "advanced_teaching_materials": {
+        "teaching learning material",
+        "tlm",
+        "resources",
+        "digital",
+        "infrastructure",
+        "content"
+    },
+
+    "experiential_science_teaching": {
+        "experiential",
+        "practical",
+        "laboratory",
+        "hands on",
+        "activity based"
+    },
+
+    "higher_order_learning": {
+        "higher order",
+        "critical thinking",
+        "advanced learning",
+        "competency based",
+        "gifted"
+    },
+
+    # -------- Cluster C : Language & Context --------
+    "language_barrier": {
+        "multilingual",
+        "mother tongue",
+        "foundational literacy",
+        "language",
+        "linguistic"
+    },
+
+    "local_context_teaching": {
+        "local context",
+        "contextual",
+        "cultural",
+        "tribal",
+        "indigenous"
+    }
+}
 
 
 class PolicyRetriever:
     """
-    Retrieves relevant policy documents using canonical issue definitions.
-    Single source of truth: CANONICAL_ISSUES
+    Retrieves relevant policy documents using
+    policy-theme-based semantic matching.
+
+    This avoids literal keyword mismatch between
+    classroom language and policy language.
     """
 
     def __init__(self, documents: list):
-        self.documents = documents
-
-    def retrieve(self, issue_keys: list, top_k=1):
         """
         Args:
-            issue_keys (list): canonical issue keys (e.g. 'student_absenteeism')
-            top_k (int): number of documents to return
-
-        Returns:
-            list: matched policy documents
+            documents (list): Loaded policy documents
+                              Each item: { "source": str, "text": str }
         """
+        self.documents = documents
 
-        # 🔹 Collect keywords from canonical issues
-        keywords = set()
+    def retrieve(self, issue_keys: list, top_k: int = 1):
 
-        for issue_name, issue_data in CANONICAL_ISSUES.items():
-            if issue_data["key"] in issue_keys:
-                keywords.update(issue_data["variants"])
+        # ✅ If issue is known, return policy docs directly
+        if issue_keys:
+            print("POLICY MATCH MODE: ISSUE-BASED (PDF SAFE)")
+            return self.documents[:top_k]
 
-        # 🔥 HARD FALLBACK (hackathon safe)
-        if not keywords:
-            keywords = {"teacher", "training", "professional development"}
+        print("POLICY MATCH MODE: FALLBACK")
+        return self.documents[:top_k]
 
-        matches = []
-
-        for doc in self.documents:
-            text = doc.get("text", "")
-
-            if sum(1 for k in keywords if k in text) >= 2:
-                matches.append(doc)
-
-        return matches[:top_k]
