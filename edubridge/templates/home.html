@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}EduBridge{% endblock %}
+
+{% block subhead %}
+<link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="badge">BRIDGING POLICY & PRACTICE</span>
+
+    <h1 class="hero-title">
+      Generic Training <br>
+      <span class="highlight blue">To Classroom</span>
+      <span class="highlight green">Ready Learning</span>
+    </h1>
+
+    <p>
+      <strong>EduBridge</strong> is a smart-adaptive teacher training platform that uses
+      <strong>GenAI</strong> to create a fast, flexible learning hub that adapts to your
+      district’s needs in real-time.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button class="btn primary" onclick="goToDIET()">SignUp for DIET →</button>
+      <button class="btn outline" onclick="goToTeacher()">SignUp as Teacher</button>
+      <button class="btn outline" onclick="goToLogin()">Teacher Login</button>
+
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE IMAGE -->
+    <div class="hero-image-wrapper">
+        <img src="{% static '\images\home.png' %}" alt="Teacher Training Illustration" class="hero-img" />
+    </div>
+</section>
+
+
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2>Powerful Capabilities <br><span>at Your Fingertips</span></h2>
+    <p class="subtitle">
+        Discover the four pillars that make EduBridge the most intelligent teacher
+        training platform.
+    </p>
+
+    <div class="feature-grid">
+
+<div class="feature-card blue" onclick="openFeedbackModal()">
+    <h3>Real-Time Feedback & Analysis</h3>
+    <p>
+        Teachers report classroom issues via web interface.
+        AI analyzes and groups them into three clusters.
+    </p>
+</div>
+
+
+        <div class="feature-card green">
+            <h3>GenAI-Powered Adaptive Training</h3>
+            <p>
+                AI customizes modules by translating content,
+                contextualizing examples, and adapting for low-resource schools.
+            </p>
+        </div>
+
+        <div class="feature-card yellow" onclick="openMicroModuleModal()">
+            <h3>Micro-Learning Modules</h3>
+            <p>
+                Short, focused training delivered exactly when teachers need it,
+                replacing long outdated workshops.
+            </p>
+        </div>
+
+        <div class="feature-card orange">
+            <h3>Dashboards DIET</h3>
+            <p>
+                Centralized dashboards with cluster-wise heatmaps
+                to deploy relevant training instantly.
+            </p>
+        </div>
+
+    </div>
+</section>
+<!-- Real-Time Feedback Modal -->
+<div id="feedbackModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-btn" onclick="closeFeedbackModal()">×</span>
+
+    <h2>🧠 Real-Time Classroom Feedback</h2>
+    <p class="modal-subtitle">
+      Tell us what’s happening in your classroom. EduBridge AI will assist you instantly.
+    </p>
+
+    <label>Issue Category</label>
+    <select id="issueType">
+      <option>Student Engagement</option>
+      <option>Language Barrier</option>
+      <option>Classroom Management</option>
+      <option>Learning Gaps</option>
+    </select>
+
+    <label>Describe the Problem</label>
+    <textarea id="teacherFeedback"
+      placeholder="Example: Students are not responding during science lessons..."
+    ></textarea>
+
+    <button class="ai-btn" onclick="submitFeedback()">
+      Analyze with AI →
+    </button>
+
+    <!-- AI RESPONSE -->
+    <div id="aiResponse" class="ai-response hidden">
+      <h4>🤖 EduBridge AI Suggestion</h4>
+      <p id="aiText"></p>
+    </div>
+  </div>
+</div>
+<!-- Micro-Learning Module Modal -->
+<div id="microModuleModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-btn" onclick="closeMicroModuleModal()">×</span>
+
+    <h2>📘 Micro-Learning Module</h2>
+    <p class="modal-subtitle">
+      Policy-aligned, classroom-ready learning in 10–15 minutes
+    </p>
+
+    <label>Module Focus Area</label>
+    <select id="moduleTopic">
+      <option>Continuous Professional Development (CPD)</option>
+      <option>Student Engagement</option>
+      <option>Inclusive Classrooms</option>
+      <option>Pedagogical Shift (NEP 2020)</option>
+    </select>
+
+    <label>Module Overview</label>
+    <div class="module-preview">
+      <p id="moduleText">
+        Select a focus area to view a summarized micro-learning module
+        based on official policy documents.
+      </p>
+    </div>
+
+    <button class="ai-btn" onclick="loadMicroModule()">
+      View Micro-Module →
+    </button>
+  </div>
+</div>
+
+
+<script src="{% static 'home.js' %}"></script>
+{% endblock %}
