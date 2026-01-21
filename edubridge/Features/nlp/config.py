@@ -148,21 +148,29 @@ CANONICAL_ISSUES = {
 
     # -------- Cluster C --------
     "language barrier": {
-        "key": "language_barrier",
-        "cluster": "C",
-        "variants": [
-            "language", "language issue",
-            "language problem",
-            "language barrier",
-            "medium", "medium issue",
-            "medium of instruction",
-            "students not understanding",
-            "children not understanding",
-            "cannot understand",
-            "english problem",
-            "hindi problem"
-        ]
-    },
+    "key": "language_barrier",
+    "cluster": "C",
+    "variants": [
+        "language",
+        "language issue",
+        "language problem",
+        "language barrier",
+        "english problem",
+        "english issue",
+        "understand english",
+        "not understand english",
+        "cannot understand english",
+        "english not understood",
+        "student understand english",
+        "student not understand english",
+        "children understand english",
+        "child not understand english",
+        "students dont understand",
+        "students do not understand",
+        "cannot understand language"
+    ]
+}
+,
 
     "local context teaching": {
         "key": "local_context_teaching",

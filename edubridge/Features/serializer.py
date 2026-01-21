@@ -4,7 +4,8 @@ from rest_framework import serializers
 
 
 class AnalyzeTextSerializer(serializers.Serializer):
-    description = serializers.CharField(required=True, allow_blank=False)
+    issue = serializers.CharField(required=True)
+
 
 
 class MicroModuleRequestSerializer(serializers.Serializer):

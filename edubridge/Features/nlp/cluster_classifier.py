@@ -1,5 +1,3 @@
-# nlp/cluster_classifier.py
-
 from collections import Counter
 from Features.nlp.config import CLUSTER_METADATA
 
@@ -9,24 +7,18 @@ class ClusterClassifier:
 
         if not canonical_issues:
             return {
-                "cluster_id": "Insufficient data",
+                "cluster_id": "Unclassified",
                 "cluster_name": "Not clearly identified",
                 "confidence": 0.0,
-                "issues": [],
-                "message": "No recognizable issues found"
+                "issues": []
             }
 
-        cluster_votes = [item["cluster"] for item in canonical_issues]
-
-        vote_counter = Counter(cluster_votes)
-        cluster_id, vote_count = vote_counter.most_common(1)[0]
-
-        confidence = round(vote_count / len(cluster_votes), 2)
+        votes = Counter([i["cluster"] for i in canonical_issues])
+        cluster_id, count = votes.most_common(1)[0]
 
         return {
             "cluster_id": cluster_id,
             "cluster_name": CLUSTER_METADATA[cluster_id]["name"],
-            "confidence": confidence,
-            "issues": canonical_issues,
-            "message": "Cluster identified successfully"
+            "confidence": round(count / len(canonical_issues), 2),
+            "issues": canonical_issues
         }
