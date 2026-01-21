@@ -29,23 +29,20 @@ class FeedbackEngine:
         self.policy_feedback_generator = PolicyFeedbackGenerator(self.client)
 
     def generate_feedback(self, issue_text: str, cluster: dict) -> dict:
-        """
-        Args:
-            issue_text (str): Raw teacher-reported issue
-            cluster (dict): Cluster identified by NLP
-                Example:
-                {
-                    "key": "student_absenteeism",
-                    "name": "Student Attendance Issues"
-                }
 
-        Returns:
-            dict: Frontend-safe feedback response
-        """
+        # FIX: Map cluster output → canonical issue key
+        issue_keys = []
 
-        # Extract canonical issue key
-        issue_key = cluster.get("key") if isinstance(cluster, dict) else None
-        issue_keys = [issue_key] if issue_key else []
+        if isinstance(cluster, dict):
+            # Case 1: NLP cluster output
+            if "issues" in cluster and cluster["issues"]:
+                issue_keys = [item["key"] for item in cluster["issues"]]
+
+            # Case 2: Fallback (cluster id only)
+            elif "cluster_id" in cluster:
+                if cluster["cluster_id"] == "A":
+                    issue_keys = ["student_absenteeism"]
+
 
         # Retrieve relevant policy documents
         policy_docs = self.policy_retriever.retrieve(issue_keys)
@@ -69,7 +66,7 @@ class FeedbackEngine:
         # Generate PROFESSIONAL policy-grounded feedback
         feedback_text = self.policy_feedback_generator.generate(
             issue=issue_text,
-            cluster=cluster.get("name", "Unclassified Issue"),
+            cluster=cluster.get("cluster_name", "Unclassified Issue"),
             policy_docs=policy_docs
         )
 
