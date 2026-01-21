@@ -64,7 +64,7 @@ function submitFeedback() {
       "X-CSRFToken": getCookie("csrftoken")
     },
     body: JSON.stringify({
-      description: description
+        issue: description
     })
   })
     .then(async res => {
@@ -78,28 +78,30 @@ function submitFeedback() {
       return data;
     })
     .then(data => {
-      // ---- Detected Issues ----
-      const issues = data.detected_issues?.map(i => i.name).join(", ")
-        || "Not clearly identified";
+      console.log("API RESPONSE:", data);
 
-      // ---- Cluster ----
-      const clusterName = data.cluster?.cluster_name || "Not identified";
+  if (!data || data.success === false) {
+    throw new Error("Invalid backend response");
+  }
 
-      // ---- AI Feedback (FIXED) ----
-      const feedbackText =
-        data.feedback?.[0]?.feedback ||
-        "No policy-based feedback available.";
+  const clusterName =
+    typeof data.cluster === "string"
+      ? data.cluster
+      : "Not identified";
+
+  const feedbackText =
+    typeof data.feedback === "string"
+      ? data.feedback
+      : "No policy-based feedback available.";
 
       responseText.innerHTML = `
-        <strong>Detected Issues</strong><br>
-        ${issues}<br><br>
 
         <strong>Cluster Identified</strong><br>
         <span class="cluster-badge">${clusterName}</span><br><br>
 
-        <strong>AI Feedback</strong><br>
-        ${feedbackText}
-      `;
+          <strong>AI Feedback</strong><br>
+  ${feedbackText}
+`;
 
       // Optional: store micro-module
       window.__MICRO_MODULE__ = data.micro_module;

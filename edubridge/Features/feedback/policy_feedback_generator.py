@@ -1,5 +1,5 @@
 # Features/feedback/policy_feedback_generator.py
-
+from Features.feedback.gemini_client import GeminiClient
 class PolicyFeedbackGenerator:
     """
     Generates professional, institutional feedback
@@ -10,7 +10,7 @@ class PolicyFeedbackGenerator:
     """
 
     def __init__(self, client):
-        self.client = client
+        self.client = GeminiClient()
 
     def generate(self, issue: str, cluster: str, policy_docs: list):
         """
@@ -59,10 +59,4 @@ Do NOT provide generic advice.
 Do NOT mention missing data.
 """
 
-        response = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=350
-        )
-
-        return response.choices[0].message.content.strip()
+        return self.client.generate(prompt)

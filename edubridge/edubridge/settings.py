@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+# print("OPENAI KEY LOADED:", os.getenv("OPENAI_API_KEY"))
+
 
 
 # Quick-start development settings - unsuitable for production
