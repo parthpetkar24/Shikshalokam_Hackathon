@@ -24,9 +24,12 @@ class KeywordExtractor:
 
         canonical_from_text = self._detect_from_text(text)
 
-        # 🔒 HARD GUARANTEE
+
         if canonical_from_text:
             return canonical_from_text
 
-        # ❌ DO NOT CONTINUE PIPELINE IF NOTHING MATCHES
-        return []
+        return [{
+        "name": "general classroom issue",
+        "key": "student_absenteeism",
+        "cluster": "A"
+    }]

@@ -1,110 +1,41 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-
-from .serializer import AnalyzeTextSerializer, MicroModuleRequestSerializer
-
+from Features.serializer import AnalyzeTextSerializer
 from Features.nlp.keyword_model import KeywordExtractor
 from Features.nlp.cluster_classifier import ClusterClassifier
+from Features.feedback.policy_loader import PolicyLoader
+from Features.feedback.policy_retriever import PolicyRetriever
 from Features.feedback.feedback_engine import FeedbackEngine
-from Features.microlearning.micro_module_selector import MicroModuleSelector
+import os
+from openai import OpenAI
+
+# LOAD POLICY PDFs ONCE 
+PDF_PATHS = [
+    "data/NEP_Final_English_0.pdf",
+    "data/Guidelines50HoursCpd.pdf",
+    "data/background_note_teacher_education.pdf",
+]
+
+policy_documents = PolicyLoader(PDF_PATHS).load()
 
 
+@api_view(["POST"])
+def analyze_feedback(request):
+    issue_text = request.data.get("issue", "")
+    cluster = request.data.get("cluster", {})
 
-keyword_extractor = KeywordExtractor()
-cluster_classifier = ClusterClassifier()
-feedback_engine = FeedbackEngine()
-micro_module_selector = MicroModuleSelector()
+    # ✅ Create GenAI client
+    client = OpenAI(
+        api_key=os.getenv("OPENAI_API_KEY"),
+    )
 
-# ANALYZE ISSUE API
-@method_decorator(csrf_exempt, name="dispatch")
-class AnalyzeIssueAPIView(APIView):
+    # ✅ Pass client to FeedbackEngine
+    feedback_engine = FeedbackEngine(client)
 
-    def post(self, request):
-        serializer = AnalyzeTextSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    result = feedback_engine.generate_feedback(
+        issue_text=issue_text,
+        cluster=cluster
+    )
 
-        text = (
-            serializer.validated_data.get("description")
-            or serializer.validated_data.get("text")
-        )
-
-        print("TEXT RECEIVED BY NLP >>>", repr(text))
-
-        try:
-            # 3️⃣ NLP — extract issues
-            issues = keyword_extractor.extract_keywords(text)
-            print("NLP ISSUES >>>", issues)
-
-            if not issues:
-                return Response(
-                    {
-                        "input_text": text,
-                        "detected_issues": [],
-                        "cluster": None,
-                        "feedback": None,
-                        "micro_module": None,
-                        "message": "Please provide more detailed classroom input."
-                    },
-                    status=status.HTTP_200_OK
-                )
-
-            cluster_result = cluster_classifier.identify_cluster(issues)
-
-            feedback = feedback_engine.generate_feedback(
-                nlp_output=issues,
-                cluster_result=cluster_result,
-                raw_issue=text
-            )
-
-            micro_module = micro_module_selector.select(cluster_result)
-
-            return Response(
-                {
-                    "input_text": text,
-                    "detected_issues": issues,
-                    "cluster": cluster_result,
-                    "feedback": feedback,
-                    "micro_module": micro_module
-                },
-                status=status.HTTP_200_OK
-            )
-
-        except Exception as e:
-            # 8️⃣ Catch ANY unexpected crash (never silent)
-            print("ANALYZE API ERROR >>>", str(e))
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-
-
-# MICRO MODULE API
-@method_decorator(csrf_exempt, name="dispatch")
-class MicroModuleAPIView(APIView):
-
-    def post(self, request):
-        serializer = MicroModuleRequestSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        topic = serializer.validated_data["topic"]
-
-        try:
-            module = micro_module_selector.select(
-                {
-                    "cluster_id": topic,
-                    "confidence": 1.0,
-                    "issues": []
-                }
-            )
-            return Response(module, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+    return Response(result)

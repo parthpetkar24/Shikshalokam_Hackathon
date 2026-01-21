@@ -1,29 +1,44 @@
-# feedback/policy_retriever.py
+# Features/policy/policy_retriever.py
 
-ISSUE_KEYWORDS = {
-    "student_absenteeism": ["attendance", "dropout", "retention"],
-    "parent_engagement": ["parent", "family", "community"],
-    "classroom_discipline": ["discipline", "behavior"],
-    "language_barrier": ["language", "mother tongue", "multilingual"],
-    "advanced_teaching_materials": ["materials", "resources", "tlm"],
-    "experiential_science_teaching": ["science", "practical", "experiment"]
-}
+from Features.nlp.config import CANONICAL_ISSUES
 
 
 class PolicyRetriever:
-    def __init__(self, documents):
+    """
+    Retrieves relevant policy documents using canonical issue definitions.
+    Single source of truth: CANONICAL_ISSUES
+    """
+
+    def __init__(self, documents: list):
         self.documents = documents
 
-    def retrieve(self, issue_keys: list, top_k=3):
-        keywords = set()
-        for key in issue_keys:
-            keywords.update(ISSUE_KEYWORDS.get(key, []))
+    def retrieve(self, issue_keys: list, top_k=1):
+        """
+        Args:
+            issue_keys (list): canonical issue keys (e.g. 'student_absenteeism')
+            top_k (int): number of documents to return
 
-        results = []
+        Returns:
+            list: matched policy documents
+        """
+
+        # 🔹 Collect keywords from canonical issues
+        keywords = set()
+
+        for issue_name, issue_data in CANONICAL_ISSUES.items():
+            if issue_data["key"] in issue_keys:
+                keywords.update(issue_data["variants"])
+
+        # 🔥 HARD FALLBACK (hackathon safe)
+        if not keywords:
+            keywords = {"teacher", "training", "professional development"}
+
+        matches = []
 
         for doc in self.documents:
-            text = doc["text"].lower()
-            if any(k in text for k in keywords):
-                results.append(doc)
+            text = doc.get("text", "")
 
-        return results[:top_k]
+            if sum(1 for k in keywords if k in text) >= 2:
+                matches.append(doc)
+
+        return matches[:top_k]

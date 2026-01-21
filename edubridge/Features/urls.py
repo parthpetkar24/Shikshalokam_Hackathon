@@ -1,7 +1,8 @@
+# Features/urls.py
+
 from django.urls import path
-from Features.views import AnalyzeIssueAPIView,MicroModuleAPIView
+from Features.views import analyze_feedback
 
 urlpatterns = [
-    path("analyze/", AnalyzeIssueAPIView.as_view(), name="analyze-issue"),
-    path("micro-module/", MicroModuleAPIView.as_view()),
+    path("analyze/", analyze_feedback, name="analyze-issue"),
 ]
