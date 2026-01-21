@@ -1,8 +1,6 @@
-function submitIssue() {
-  alert("Issue submitted successfully! AI will analyze it.");
-}
-
-function generateModule() {
-  document.getElementById("result").innerText =
-    "✅ AI Generated: Localized micro-training module deployed!";
+function goToDashboard() {
+    // For demo purposes, let's go to the Teacher Dashboard
+    window.location.href = "teacher.html"; 
+    window.location.href = "diet.html"; 
+    // Or create a logic to check user role
 }

@@ -11,20 +11,15 @@ cards.forEach(card => {
         card.style.transform = "scale(1)";
     });
 });
+
 function goToDIET() {
-  window.location.href = "loginpage\\diet_login.html";
+    window.location.href = "loginpage/diet_login.html";
 }
 
 function goToTeacher() {
-  window.location.href = "loginpage\\sign_up.html";
+    window.location.href = "loginpage/sign_up.html";
 }
 
 function goToLogin() {
-  window.location.href = "loginpage\\teacher_login.html";
+    window.location.href = "loginpage/teacher_login.html";
 }
-<script>
-  function goToDashboard() {
-    window.location.href = "dashboard/index.html";
-  }
-</script>
-
