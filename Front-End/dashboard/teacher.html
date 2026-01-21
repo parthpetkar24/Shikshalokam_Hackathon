@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>👩‍🏫 Teacher Dashboard</h2>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h3>Report Classroom Issue</h3>
+    <select id="issue">
+      <option>Student Understanding</option>
+      <option>Language Problem</option>
+      <option>Lack of Resources</option>
+      <option>Curriculum Difficulty</option>
+    </select>
+    <textarea placeholder="Describe your issue..."></textarea>
+    <button onclick="submitIssue()">Submit</button>
+  </div>
+
+  <div class="card">
+    <h3>Recommended Micro-Learning</h3>
+    <ul>
+      <li>📘 Teaching Fractions with Local Objects (7 mins)</li>
+      <li>🎥 Activity-Based Learning Video (5 mins)</li>
+      <li>🎧 Audio Guide in Local Language</li>
+    </ul>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

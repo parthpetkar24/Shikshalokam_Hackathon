@@ -22,4 +22,9 @@ function goToTeacher() {
 function goToLogin() {
   window.location.href = "loginpage\\teacher_login.html";
 }
+<script>
+  function goToDashboard() {
+    window.location.href = "dashboard/index.html";
+  }
+</script>
 
