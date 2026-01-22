@@ -2,15 +2,15 @@ import re
 
 class PolicyExtractor:
     @staticmethod
-    def extract(text: str, keywords: list[str], window=800) -> str:
+    def extract_relevant_text(text: str, keywords: list[str], window: int = 600) -> str:
         extracted = []
 
-        for kw in keywords:
+        for keyword in keywords:
             pattern = re.compile(
-                rf"(.{{0,{window}}}{re.escape(kw)}.{{0,{window}}})",
+                rf"(.{{0,{window}}}\b{re.escape(keyword)}\b.{{0,{window}}})",
                 re.IGNORECASE
             )
             matches = pattern.findall(text)
             extracted.extend(matches)
 
-        return " ".join(extracted)
+        return " ".join(set(extracted))

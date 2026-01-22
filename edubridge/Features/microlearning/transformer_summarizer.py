@@ -1,33 +1,39 @@
 from transformers import pipeline
 
 class TransformerSummarizer:
-    """
-    Singleton Transformer summarizer using BART
-    """
-
-    _summarizer = None
+    _model = None
 
     @classmethod
     def get_model(cls):
-        if cls._summarizer is None:
-            cls._summarizer = pipeline(
+        if cls._model is None:
+            cls._model = pipeline(
                 "summarization",
                 model="facebook/bart-large-cnn",
                 device=-1  # CPU
             )
-        return cls._summarizer
+        return cls._model
 
     @classmethod
     def summarize(cls, text: str) -> str:
-        summarizer = cls.get_model()
+        model = cls.get_model()
 
-        # BART input limit protection
+        # Safety trim
         text = text[:3000]
 
-        summary = summarizer(
+        input_length = len(text.split())
+
+        # 🧠 Dynamic length control (THIS FIXES THE WARNING)
+        max_length = max(40, int(input_length * 0.6))
+        min_length = max(20, int(input_length * 0.3))
+
+        # If text is already short, don't over-summarize
+        if input_length < 80:
+            return text
+
+        summary = model(
             text,
-            max_length=180,
-            min_length=80,
+            max_length=max_length,
+            min_length=min_length,
             do_sample=False
         )
 

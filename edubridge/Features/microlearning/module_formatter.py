@@ -1,9 +1,10 @@
 class MicroModuleFormatter:
     @staticmethod
-    def format(summary: str, source: str) -> dict:
+    def format(module: dict) -> dict:
         return {
-            "module_title": "CPD Micro-Learning Module",
-            "policy_source": source,
-            "policy_summary": summary,
-            "duration": "10–15 minutes"
+            "CPD Micro-Learning Module": module["module_title"],
+            "Source Document": module["policy_source"],
+            "Learning Objectives": module["learning_objectives"],
+            "Policy Summary": module["summary"],
+            "Estimated Duration": module["duration"]
         }
