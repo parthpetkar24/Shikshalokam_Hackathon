@@ -1,11 +1,6 @@
 class LessonExplainer:
     @staticmethod
     def explain(policy_intent: str, focus: str) -> dict:
-        """
-        Deterministic, human-readable explanation generator.
-        NO hallucination, NO OCR noise.
-        """
-
         explanation = (
             f"This policy focuses on {focus}. "
             f"In simple terms, {policy_intent.lower()}"

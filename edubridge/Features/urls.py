@@ -1,5 +1,3 @@
-# Features/urls.py
-
 from django.urls import path
 from Features.views import analyze_feedback, generate_micro_module
 

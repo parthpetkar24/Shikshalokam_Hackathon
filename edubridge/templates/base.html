@@ -47,25 +47,10 @@ nav a {
 
     <nav>
         <a href="#features">Features</a>
-        <button class="btn primary" onclick="goToDIET()">SignUp for DIET →</button>
-      <button class="btn outline" onclick="goToTeacher()">SignUp as Teacher</button>
     </nav>
 </header>
     {% block body %}
     {% endblock %}
-    <script>
-        function goToDIET() {
-  window.location.href = "loginpage\\diet_login.html";
-}
-
-function goToTeacher() {
-  window.location.href = "loginpage\\sign_up.html";
-}
-
-function goToLogin() {
-  window.location.href = "loginpage\\teacher_login.html";
-}
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -27,7 +27,6 @@ class GeminiSummarizer:
             return response.text.strip()
 
         except Exception:
-            # ✅ HARD FALLBACK (NO AI, NO FAILURE)
             return (
                 "This micro-learning module is derived from official policy documents.\n\n"
                 + policy_text[:800]

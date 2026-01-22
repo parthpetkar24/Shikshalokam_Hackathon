@@ -13,8 +13,6 @@ class GeminiClient:
             model="models/gemini-1.5-flash",
             contents=prompt
         )
-
-        # ✅ SAFE TEXT EXTRACTION (handles all SDK variants)
         try:
             # New SDK format
             return response.candidates[0].content.parts[0].text.strip()

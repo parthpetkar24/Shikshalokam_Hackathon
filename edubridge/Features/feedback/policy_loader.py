@@ -1,5 +1,3 @@
-# Features/policy/policy_loader.py
-
 import os
 from PyPDF2 import PdfReader
 
