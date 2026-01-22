@@ -102,9 +102,17 @@ function submitFeedback() {
           <strong>AI Feedback</strong><br>
   ${feedbackText}
 `;
+  const clusterToModule = {
+    "Teacher Professional Development": "cpd_overview",
+    "Inclusive Education": "cpd_inclusive_practices",
+    "Pedagogical Practices": "experiential_pedagogy"
+  };
 
-      // Optional: store micro-module
-      window.__MICRO_MODULE__ = data.micro_module;
+  const moduleKey = clusterToModule[clusterName];
+  if (moduleKey) {
+    fetchMicroModule(moduleKey);
+  }
+
     })
     .catch(err => {
       responseText.innerText = "An error occurred while analyzing the feedback.";
@@ -116,20 +124,73 @@ function submitFeedback() {
 // -------------------- LOAD MICRO MODULE --------------------
 function loadMicroModule() {
   const moduleText = document.getElementById("moduleText");
+  const select = document.getElementById("moduleTopic");
 
-  if (!window.__MICRO_MODULE__) {
-    moduleText.innerText = "No micro-module available.";
+  const selectedLabel = select.value;
+  const topicMap = {
+    "Continuous Professional Development (CPD)": "cpd_overview",
+    "Student Engagement": "cpd_peer_learning",
+    "Inclusive Classrooms": "cpd_inclusive_practices",
+    "Pedagogical Shift (NEP 2020)": "experiential_pedagogy"
+  };
+
+  const topicKey = topicMap[selectedLabel];
+
+  if (!topicKey) {
+    moduleText.innerText = "Invalid module selection.";
     return;
   }
 
-  const module = window.__MICRO_MODULE__;
-
-  moduleText.innerHTML = `
-    <h4>${module.title}</h4>
-    <p><strong>Duration:</strong> ${module.duration_minutes} minutes</p>
-    <p><strong>Objectives:</strong></p>
-    <ul>
-      ${module.objectives.map(o => `<li>${o}</li>`).join("")}
-    </ul>
-  `;
+  moduleText.innerText = "Loading micro-learning module...";
+  fetch("/api/micro-module/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken")
+    },
+    body: JSON.stringify({
+      topic: topicKey
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("MICRO MODULE RESPONSE:", data);
+      if (!data || !data.micro_module || !data.micro_module.module_content) {
+  moduleText.innerText = "Unable to load micro-learning module.";
+  return;
 }
+
+      const m = data.micro_module;
+      moduleText.innerHTML = `
+  <h3>${m.module_title}</h3>
+  <p><strong>Source:</strong> ${m.policy_source}</p>
+
+  ${m.policy_intent ? `<p><em>${m.policy_intent}</em></p>` : ""}
+
+  <h4>Learning Objectives</h4>
+  <ul>
+    ${(m.learning_objectives || [])
+      .map(obj => `<li>${obj}</li>`)
+      .join("")}
+  </ul>
+
+  ${(m.module_content || [])
+    .map(section => `
+      <h4>${section.title}</h4>
+      <ul>
+        ${section.points.map(point => `<li>${point}</li>`).join("")}
+      </ul>
+    `)
+    .join("")}
+
+  <p><em>Estimated duration: ${m.duration}</em></p>
+`;
+
+    })
+    .catch(err => {
+      console.error("Micro-module fetch error:", err);
+      moduleText.innerText = "Error loading micro-learning module.";
+    });
+}
+
+

@@ -1,33 +1,17 @@
-# microlearning/micro_module_selector.py
-
 from Features.microlearning.micro_module_config import (
-    MICRO_MODULES,
+    MICRO_MODULE_POLICY_MAP,
     DEFAULT_MICRO_MODULE
 )
-
-CONFIDENCE_THRESHOLD = 0.5
-
+from Features.microlearning.module_generator import ModuleGenerator
 
 class MicroModuleSelector:
-
-    def select(self, cluster_result: dict):
-        """
-        cluster_result = output of ClusterClassifier (Fix 2)
-        """
-
-        if (
-            cluster_result["cluster_id"] == "Insufficient data"
-            or cluster_result["confidence"] < CONFIDENCE_THRESHOLD
-        ):
+    def select(self, topic_key: str):
+        config = MICRO_MODULE_POLICY_MAP.get(topic_key)
+        if not config:
             return DEFAULT_MICRO_MODULE
 
-        issues = cluster_result.get("issues", [])
-
-        # Pick first matching issue module
-        for issue in issues:
-            key = issue.get("key")
-            if key in MICRO_MODULES:
-                return MICRO_MODULES[key]
-
-        # Safe fallback
-        return DEFAULT_MICRO_MODULE
+        generator = ModuleGenerator(
+            pdf_path=config["pdf"],
+            policy_intent=config.get("policy_intent", "")
+        )
+        return generator.generate()

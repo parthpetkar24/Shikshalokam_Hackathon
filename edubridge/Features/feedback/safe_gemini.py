@@ -16,7 +16,6 @@ class SafeGemini:
                 self.client = None
 
     def generate(self, prompt: str) -> str:
-        # Try Gemini FIRST
         if self.client:
             try:
                 response = self.client.models.generate_content(

@@ -1,10 +1,11 @@
 from google import genai
-
+from django.conf import settings
 
 class GeminiClient:
     def __init__(self):
         self.client = genai.Client(
-            api_key="AIzaSyBrp0eI54VPOqZAWciLUO1XyocSeu_VZ6k"  # TEMP: dev only
+            api_key=settings.GEMINI_API_KEY
+
         )
 
     def generate(self, prompt: str) -> str:

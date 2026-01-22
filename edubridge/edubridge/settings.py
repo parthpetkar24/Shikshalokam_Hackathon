@@ -18,6 +18,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 # print("OPENAI KEY LOADED:", os.getenv("OPENAI_API_KEY"))
 
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set in .env file")
+
+
+print("GEMINI KEY LOADED:", GEMINI_API_KEY[:6])
 
 
 # Quick-start development settings - unsuitable for production
