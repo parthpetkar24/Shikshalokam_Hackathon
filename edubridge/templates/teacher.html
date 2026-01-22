@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}Teacher Dashboard - EduBridge{% endblock %}
+    {% block subhead %}
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="{% static 'dashboard.css'%}">
+    {% endblock %}
+
+
+{% block body %}
+<div class="d-wrapper">
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="logo-box">EB</span> EduBridge
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">My Classroom</a></li>
+            <li><a href="#">My Modules</a></li>
+            <li><a href="#">Performance</a></li>
+            <li><a href="../home.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="header-bar">
+            <div>
+                <h2>Welcome, Anita</h2>
+                <p class="text-muted">Govt. High School, District Block A</p>
+            </div>
+            <div class="user-profile">
+                <span class="avatar">A</span>
+            </div>
+        </header>
+
+        <section class="mb-5">
+            <div class="dash-card feedback-area">
+                <h4 class="mb-3">Report a Classroom Challenge</h4>
+                <p class="text-muted mb-3">Describe your issue. Our AI will analyze it and suggest training.</p>
+                <form id="issueForm">
+                    <textarea rows="3" placeholder="Example: My students are struggling to understand Geometry concepts because of language barriers..."></textarea>
+                    <button type="button" class="btn primary" onclick="submitIssue()">Analyze & Get Help</button>
+                </form>
+                
+                <div id="aiResponse" class="mt-4 p-3 bg-light rounded" style="display:none; border-left: 4px solid #0b6cff;">
+                    <strong><span style="color:#0b6cff">AI Analysis:</span></strong> Contextual Issue Detected.
+                    <p class="mb-0 mt-1">Generating a micro-module on "Geometry in Local Dialects"...</p>
+                </div>
+            </div>
+        </section>
+
+        <h4 class="mb-4">Your Adapted Micro-Modules</h4>
+        
+        <div class="module-card">
+            <div class="module-content">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5>Inclusive Classroom Strategies</h5>
+                    <span class="badge-ai">GenAI Customized</span>
+                </div>
+                <p class="text-muted">Adapted for: Low resource availability</p>
+                <div class="progress mb-3" style="height: 6px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%"></div>
+                </div>
+                <button class="btn outline btn-sm">Continue Learning</button>
+            </div>
+        </div>
+
+        <div class="module-card">
+            <div class="module-content">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5>Science via Storytelling</h5>
+                    <span class="badge-ai">New</span>
+                </div>
+                <p class="text-muted">Context: Local folklore examples added</p>
+                <div class="progress mb-3" style="height: 6px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 0%"></div>
+                </div>
+                <button class="btn primary btn-sm">Start Module</button>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="{% static 'teacher_dashboard'}"></script>
+{% endblock %}
+
+
