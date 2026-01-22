@@ -9,10 +9,10 @@ class MicroModuleSelector:
             raise ValueError("Invalid micro-module topic")
 
         generator = ModuleGenerator(
-            pdf_path=config["pdf"],
-            policy_keywords=config["policy_keywords"],
+            title=config["title"],
             policy_intent=config["policy_intent"],
-            title=config["title"]
+            focus=config["classroom_focus"],
+            pdf_name=config["pdf"].name
         )
 
         return generator.generate()

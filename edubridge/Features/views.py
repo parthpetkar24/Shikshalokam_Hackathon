@@ -43,4 +43,4 @@ def generate_micro_module(request):
     return Response({
         "success": True,
         "micro_module": module
-    })
+    }, status=200)
